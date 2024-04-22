@@ -1,58 +1,63 @@
 ﻿using Family_Meetup.FamilyEvents;
+using Family_Meetup.Persistance;
 
 namespace Family_Meetup.Models.Services
 {
     public class FamilyEventService : IFamilyEventService
     {
-        private static readonly Dictionary<Guid, Event> _events = new Dictionary<Guid, Event>();
+        private readonly FamilyMeetupDbContext _dbContext;
+
+        public FamilyEventService(FamilyMeetupDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
 
         public string addComment(Guid id, string username, string comment)
         {
-
-            if(_events[id].userWhiteList.Count != 0 && !_events[id].userWhiteList.Contains(username))
+            Event addCommentEvent = _dbContext.Events.Find(id);
+            if (addCommentEvent.userWhiteList.Count != 0 && !addCommentEvent.userWhiteList.Contains(username))
             {
                 return "Error user not in whitelist";
             }
 
-            _events[id].comments.Add(new Comment(username, comment));
+            addCommentEvent.comments.Add(new Comment(username, comment));
+
+            _dbContext.Events.Update(addCommentEvent);
+            _dbContext.SaveChanges();
 
             return "Comment Added";
         }
 
         public void CreateEvent(Event familyEvent)
         {
-            _events.Add(familyEvent.id, familyEvent);
+            _dbContext.Add(familyEvent);
+            _dbContext.SaveChanges();
         }
 
         public List<Event> getAllEvents(string username, string searchUsername)
         {
-            return _events.Values.Where(familyEvent => {
-
-                if (familyEvent.userWhiteList.Count != 0 && !familyEvent.userWhiteList.Contains(username))
-                {
-                    return false;
-                }
-
-                return familyEvent.creator.Equals(username); 
-            
-            }).ToList();
+            return _dbContext.Events.Where(familyEvent => filterEventByUsername(familyEvent,username)).ToList();
 
         }
 
         public Event getEvent(Guid id, string username)
         {
-            if (_events[id].userWhiteList.Count != 0 && !_events[id].userWhiteList.Contains(username))
+            Event getEvent = _dbContext.Events.Find(id);
+            
+            if (getEvent.userWhiteList.Count != 0 && !getEvent.userWhiteList.Contains(username))
             {
                 return null;
             }
 
-            return _events[id];
+            return getEvent;
         }
 
         public string voteDate(Guid id, string username, VoteDateRequest voteDateRequest)
         {
+            Event voteDateEvent = _dbContext.Events.Find(id);
 
-            if (_events[id].userWhiteList.Count != 0 && !_events[id].userWhiteList.Contains(username))
+            if (voteDateEvent.userWhiteList.Count != 0 && !voteDateEvent.userWhiteList.Contains(username))
             {
                 return "Error user not in whitelist";
             }
@@ -60,13 +65,13 @@ namespace Family_Meetup.Models.Services
             int userCount = 0;
             try
             {
-                userCount = _events[id].meetupdatevoteoptions.Where(dateVoteOption => dateVoteOption.votedusers.Contains("username")).Count();
+                userCount = voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => dateVoteOption.votedusers.Contains("username")).Count();
             }
             catch (Exception ex)
             { }
 
 
-            if (userCount >= _events[id].maxvotesbyuser)
+            if (userCount >= voteDateEvent.maxvotesbyuser)
             {
                 return "Vote not added. User has its max votes reached";
             }
@@ -76,12 +81,12 @@ namespace Family_Meetup.Models.Services
                 int usersPerDateCount = 0;
                 try
                 {
-                    usersPerDateCount = _events[id].meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Count;
+                    usersPerDateCount = voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Count;
                 }
                 catch (Exception ex) { }
 
 
-                if (_events[id].meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Count >= _events[id].maxvotesondate)
+                if (voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Count >= voteDateEvent.maxvotesondate)
                 {
                     return "Vote not added. Date(s) has reachd its max votes on";
                 }
@@ -92,7 +97,7 @@ namespace Family_Meetup.Models.Services
             {
                 try
                 {
-                    _events[id].meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault();
+                    voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault();
                 }
                 catch (Exception ex)
                 {
@@ -103,11 +108,28 @@ namespace Family_Meetup.Models.Services
             foreach (DateTime date in voteDateRequest.Dates)
             {
 
-                _events[id].meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Add(username);
+                voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Add(username);
 
             }
 
+            _dbContext.Events.Update(voteDateEvent);
+            _dbContext.SaveChanges();
+
             return "Success. Vote(s) added";
+        }
+
+        private bool filterEventByUsername(Event testEvent, string username)
+        {
+            {
+
+                if (testEvent.userWhiteList.Count != 0 && !testEvent.userWhiteList.Contains(username))
+                {
+                    return false;
+                }
+
+                return testEvent.creator.Equals(username);
+
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 using Family_Meetup.Models.Services;
+using Family_Meetup.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<FamilyMeetupDbContext>(options =>
+options.UseSqlite("Data Source=FamilyMeetup.db")
+);
 
 builder.Services.AddScoped<IFamilyEventService,FamilyEventService>();
 
