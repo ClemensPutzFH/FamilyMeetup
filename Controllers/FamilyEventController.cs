@@ -34,7 +34,7 @@ namespace Family_Meetup.Controllers
 
            foreach(DateTime dateOption in request.MeetupDateVoteOptions)
             {
-                dateVoteOptions.Add(new MeetupDateVoteOption(dateOption,null));
+                dateVoteOptions.Add(new MeetupDateVoteOption(dateOption,new List<string>(), Guid.NewGuid()));
             }
 
             var familyEvent = new Event(

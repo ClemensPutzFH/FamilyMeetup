@@ -22,8 +22,9 @@ namespace Family_Meetup.Models
     public class MeetupDateVoteOption
     {
         public MeetupDateVoteOption() { }
-        public MeetupDateVoteOption(DateTime date, List<string> votedusers)
+        public MeetupDateVoteOption(DateTime date, List<string> votedusers, Guid id)
         {
+            this.Id = Id;
             this.date = date;
             this.votedusers = votedusers;
         }
