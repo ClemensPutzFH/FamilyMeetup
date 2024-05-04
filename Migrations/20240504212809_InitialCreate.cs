@@ -29,7 +29,7 @@ namespace Family_Meetup.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -39,16 +39,16 @@ namespace Family_Meetup.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Events_Eventid",
+                        name: "FK_Comments_Events_Eventid",
                         column: x => x.Eventid,
                         principalTable: "Events",
                         principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "MeetupDateVoteOption",
+                name: "MeetupDateVoteOptions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -58,32 +58,32 @@ namespace Family_Meetup.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetupDateVoteOption", x => x.Id);
+                    table.PrimaryKey("PK_MeetupDateVoteOptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetupDateVoteOption_Events_Eventid",
+                        name: "FK_MeetupDateVoteOptions_Events_Eventid",
                         column: x => x.Eventid,
                         principalTable: "Events",
                         principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_Eventid",
-                table: "Comment",
+                name: "IX_Comments_Eventid",
+                table: "Comments",
                 column: "Eventid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetupDateVoteOption_Eventid",
-                table: "MeetupDateVoteOption",
+                name: "IX_MeetupDateVoteOptions_Eventid",
+                table: "MeetupDateVoteOptions",
                 column: "Eventid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "MeetupDateVoteOption");
+                name: "MeetupDateVoteOptions");
 
             migrationBuilder.DropTable(
                 name: "Events");
