@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Family_Meetup.Migrations
 {
     [DbContext(typeof(FamilyMeetupDbContext))]
-    [Migration("20240504212809_InitialCreate")]
+    [Migration("20240506173952_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace Family_Meetup.Migrations
 
                     b.HasIndex("Eventid");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Family_Meetup.Models.Event", b =>
@@ -104,7 +104,7 @@ namespace Family_Meetup.Migrations
 
                     b.HasIndex("Eventid");
 
-                    b.ToTable("MeetupDateVoteOptions");
+                    b.ToTable("MeetupDateVoteOption");
                 });
 
             modelBuilder.Entity("Family_Meetup.Models.Comment", b =>

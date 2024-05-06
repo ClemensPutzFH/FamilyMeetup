@@ -23,7 +23,7 @@ namespace Family_Meetup.Models.Services
 
             addCommentEvent.comments.Add(new Comment(username, comment));
 
-            _dbContext.Events.Update(addCommentEvent);
+            _dbContext.Update(addCommentEvent);
             _dbContext.SaveChanges();
 
             return "Comment Added";
@@ -64,6 +64,14 @@ namespace Family_Meetup.Models.Services
                 return "Error user not in whitelist";
             }
 
+            foreach (DateTime date in voteDateRequest.Dates)
+            {
+
+                if(voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault() == null){
+                    return "Error. At least one date not found. No user votes have been counted";
+                }
+            }
+
             int userCount = 0;
             try
             {
@@ -97,24 +105,12 @@ namespace Family_Meetup.Models.Services
 
             foreach (DateTime date in voteDateRequest.Dates)
             {
-                try
-                {
-                    voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault();
-                }
-                catch (Exception ex)
-                {
-                    return "Error. At least one date not found. No user votes have been counted";
-                }
-            }
-
-            foreach (DateTime date in voteDateRequest.Dates)
-            {
 
                 voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Add(username);
 
             }
 
-            _dbContext.Events.Update(voteDateEvent);
+            //_dbContext.Update(voteDateEvent);
             _dbContext.SaveChanges();
 
             return "Success. Vote(s) added";

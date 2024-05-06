@@ -59,32 +59,12 @@ namespace Family_Meetup.Controllers
         }
 
         [HttpGet("/GetEvent/{id}")]
-        [ProducesResponseType(typeof(GetEventResponse), 200)]
+        [ProducesResponseType(typeof(Event), 200)]
         public IActionResult GetEvent(Guid id, string username)
         {
             Event familyEvent = _familyEventService.getEvent(id, username);
 
-            var dateVoteOptions = new List<DateTime>();
-
-            foreach (MeetupDateVoteOption dateOption in familyEvent.meetupdatevoteoptions)
-            {
-                dateVoteOptions.Add(dateOption.date);
-            }
-
-
-            var response = new GetEventResponse(
-                familyEvent.title,
-                familyEvent.creator,
-                familyEvent.description,
-                familyEvent.location,
-                familyEvent.creationdate,
-                familyEvent.userWhiteList,
-                familyEvent.maxvotesondate,
-                familyEvent.maxvotesbyuser,
-                dateVoteOptions,
-                familyEvent.comments
-                );
-            return Ok(response);
+            return Ok(familyEvent);
         }
 
         [HttpGet("/GetAllEvents")]

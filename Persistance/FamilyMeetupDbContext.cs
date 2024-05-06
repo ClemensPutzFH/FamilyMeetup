@@ -12,9 +12,6 @@ namespace Family_Meetup.Persistance
         }
 
         public DbSet<Event> Events { get; set; } = null!;
-        public DbSet<MeetupDateVoteOption> MeetupDateVoteOptions { get; set; } = null!;
-
-        public DbSet<Comment> Comments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,3 +29,5 @@ namespace Family_Meetup.Persistance
         }
     }
 }
+//dotnet ef migrations add InitialCreate -p .\Family-Meetup.sln
+//dotnet ef database update

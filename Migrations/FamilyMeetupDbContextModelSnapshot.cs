@@ -38,7 +38,7 @@ namespace Family_Meetup.Migrations
 
                     b.HasIndex("Eventid");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Family_Meetup.Models.Event", b =>
@@ -102,7 +102,7 @@ namespace Family_Meetup.Migrations
 
                     b.HasIndex("Eventid");
 
-                    b.ToTable("MeetupDateVoteOptions");
+                    b.ToTable("MeetupDateVoteOption");
                 });
 
             modelBuilder.Entity("Family_Meetup.Models.Comment", b =>
