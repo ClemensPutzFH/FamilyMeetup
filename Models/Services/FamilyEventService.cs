@@ -39,7 +39,11 @@ namespace Family_Meetup.Models.Services
         public List<Event> getAllEvents(string username, string searchUsername)
         {
             
-            return _dbContext.Events.Where(familyEvent => filterEventByUsername(familyEvent,username)).ToList();
+            var selectedFamilyEvent = _dbContext.Events.Where(familyEvent =>
+            familyEvent.creator.Equals(searchUsername)
+             ).ToList();
+
+            return selectedFamilyEvent.Where(familyEvent => (familyEvent.userWhiteList.Count != 0 && familyEvent.userWhiteList.Contains(username)) || familyEvent.userWhiteList.Count == 0).ToList();
 
         }
 
