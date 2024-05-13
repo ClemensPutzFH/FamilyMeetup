@@ -11,10 +11,12 @@ namespace Family_Meetup.Controllers
     {
 
         private readonly IFamilyEventService _familyEventService;
-
-        public FamilyEventController(IFamilyEventService familyEventService)
+        private readonly ILogger<FamilyEventController> _logger;
+        
+        public FamilyEventController(IFamilyEventService familyEventService, ILogger<FamilyEventController> logger)
         {
             _familyEventService = familyEventService;
+            _logger = logger;
         }
 
         /*
@@ -29,7 +31,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type=typeof(CreateEventResponse))]
         public IActionResult CreateEvent(CreateEventRequest request)
         {
-
+            _logger.LogInformation("[SERILOG] Create event function called");
             var dateVoteOptions = new List<MeetupDateVoteOption>();
 
            foreach(DateTime dateOption in request.MeetupDateVoteOptions)
@@ -52,7 +54,7 @@ namespace Family_Meetup.Controllers
 
             _familyEventService.CreateEvent(familyEvent);
 
-
+            _logger.LogInformation($"[SERILOG] Created event: {familyEvent}");
             return CreatedAtAction(
                 nameof(CreateEvent), 
                 new CreateEventResponse(Location: "/GetEvent/" + familyEvent.id.ToString()));
