@@ -1,5 +1,6 @@
 ﻿using Family_Meetup.FamilyEvents;
 using Family_Meetup.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace Family_Meetup.Models.Services
 {
@@ -75,7 +76,7 @@ namespace Family_Meetup.Models.Services
             int userCount = 0;
             try
             {
-                userCount = voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => dateVoteOption.votedusers.Contains("username")).Count();
+                userCount = voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => dateVoteOption.votedusers.Contains(username)).Count();
             }
             catch (Exception ex)
             { }
@@ -103,14 +104,18 @@ namespace Family_Meetup.Models.Services
 
             }
 
+            
             foreach (DateTime date in voteDateRequest.Dates)
             {
 
                 voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().votedusers.Add(username);
+                _dbContext.Entry(voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault()).State = EntityState.Modified;
+                //voteDateEvent.meetupdatevoteoptions.Where(dateVoteOption => 0 == dateVoteOption.date.CompareTo(date)).FirstOrDefault().date = DateTime.Now;
+                //voteDateEvent.userWhiteList.Add("test");
 
             }
 
-            //_dbContext.Update(voteDateEvent);
+            _dbContext.Update(voteDateEvent);
             _dbContext.SaveChanges();
 
             return "Success. Vote(s) added";

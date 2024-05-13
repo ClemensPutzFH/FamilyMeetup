@@ -32,7 +32,7 @@ namespace Family_Meetup.Models
         [Key]
         public Guid Id { get; set; }
 
-        public DateTime date { get; private set;  }
+        public DateTime date { get; set;  }
         public List<string> votedusers { get; private set;  }
     }
 
