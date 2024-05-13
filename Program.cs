@@ -1,8 +1,11 @@
 using Family_Meetup.Models.Services;
 using Family_Meetup.Persistance;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -30,5 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+Log.Logger = new LoggerConfiguration().WriteTo.File("./logger.log").CreateLogger();
 
 app.Run();
