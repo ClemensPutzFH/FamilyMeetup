@@ -4,4 +4,6 @@ bin/
 
 *.log
 
+.env
+
 FamilyMeetup.db-*

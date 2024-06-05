@@ -2,6 +2,7 @@ using Family_Meetup.Models.Services;
 using Family_Meetup.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseSerilogRequestLogging();
 
-Log.Logger = new LoggerConfiguration().WriteTo.File("./logger.log").CreateLogger();
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("./logger.log")
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+                {
+                    AutoRegisterTemplate = true,
+                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+                    IndexFormat = "family-meetup-log-test3-{0:yyyy.MM.dd}",
+                    InlineFields = true
+                })
+                .CreateLogger();
 
 app.Run();
