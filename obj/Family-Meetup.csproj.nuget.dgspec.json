@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\puc1wi\\Documents\\FamilyMeetup\\Family-Meetup.csproj": {}
+    "/Users/alexandarvujisic/VSProjects/WFPFinalFamilyMeetupNew/FamilyMeetup/Family-Meetup.csproj": {}
   },
   "projects": {
-    "C:\\Users\\puc1wi\\Documents\\FamilyMeetup\\Family-Meetup.csproj": {
+    "/Users/alexandarvujisic/VSProjects/WFPFinalFamilyMeetupNew/FamilyMeetup/Family-Meetup.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\puc1wi\\Documents\\FamilyMeetup\\Family-Meetup.csproj",
+        "projectUniqueName": "/Users/alexandarvujisic/VSProjects/WFPFinalFamilyMeetupNew/FamilyMeetup/Family-Meetup.csproj",
         "projectName": "Family-Meetup",
-        "projectPath": "C:\\Users\\puc1wi\\Documents\\FamilyMeetup\\Family-Meetup.csproj",
-        "packagesPath": "C:\\Users\\puc1wi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\puc1wi\\Documents\\FamilyMeetup\\obj\\",
+        "projectPath": "/Users/alexandarvujisic/VSProjects/WFPFinalFamilyMeetupNew/FamilyMeetup/Family-Meetup.csproj",
+        "packagesPath": "/Users/alexandarvujisic/.nuget/packages/",
+        "outputPath": "/Users/alexandarvujisic/VSProjects/WFPFinalFamilyMeetupNew/FamilyMeetup/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\puc1wi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/alexandarvujisic/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/sdk/7.0.316/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,7 +64,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.129\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.316/RuntimeIdentifierGraph.json"
         }
       }
     }
