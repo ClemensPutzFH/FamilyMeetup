@@ -42,7 +42,7 @@ Log.Logger = new LoggerConfiguration()
                 {
                     AutoRegisterTemplate = true,
                     AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
-                    IndexFormat = "family-meetup-log-test3-{0:yyyy.MM.dd}",
+                    IndexFormat = "family-meetup-log-{0:yyyy.MM.dd}",
                     InlineFields = true
                 })
                 .CreateLogger();
