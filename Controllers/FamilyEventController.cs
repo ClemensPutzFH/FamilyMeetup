@@ -11,10 +11,12 @@ namespace Family_Meetup.Controllers
     {
 
         private readonly IFamilyEventService _familyEventService;
-
-        public FamilyEventController(IFamilyEventService familyEventService)
+        private readonly ILogger<FamilyEventController> _logger;
+        
+        public FamilyEventController(IFamilyEventService familyEventService, ILogger<FamilyEventController> logger)
         {
             _familyEventService = familyEventService;
+            _logger = logger;
         }
 
         /*
@@ -29,7 +31,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type=typeof(CreateEventResponse))]
         public IActionResult CreateEvent(CreateEventRequest request)
         {
-
+            _logger.LogInformation("[SERILOG] Create event function called");
             var dateVoteOptions = new List<MeetupDateVoteOption>();
 
            foreach(DateTime dateOption in request.MeetupDateVoteOptions)
@@ -52,7 +54,7 @@ namespace Family_Meetup.Controllers
 
             _familyEventService.CreateEvent(familyEvent);
 
-
+            _logger.LogInformation($"[SERILOG] Created event: {familyEvent}");
             return CreatedAtAction(
                 nameof(CreateEvent), 
                 new CreateEventResponse(Location: "/GetEvent/" + familyEvent.id.ToString()));
@@ -62,6 +64,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(typeof(Event), 200)]
         public IActionResult GetEvent(Guid id, string username)
         {
+            _logger.LogInformation("[SERILOG] GetEvent function called");
             Event familyEvent = _familyEventService.getEvent(id, username);
 
             return Ok(familyEvent);
@@ -71,6 +74,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<EventShort>))]
         public IActionResult GetAllEvent(string username, string searchUsername)
         {
+            _logger.LogInformation("[SERILOG] GetAllEvents function called");
             List<Event> familyEvents = _familyEventService.getAllEvents(username, searchUsername);
 
             List<EventShort> allShortEvents = new List<EventShort>();
@@ -87,6 +91,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult voteDate(Guid id, string username, [FromBody] VoteDateRequest voteDateRequest)
         {
+            _logger.LogInformation("[SERILOG] VoteDate function called");
             String respond = _familyEventService.voteDate(id, username, voteDateRequest);
             return Ok(respond);
         }
@@ -96,6 +101,7 @@ namespace Family_Meetup.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult addComment(Guid id, string username, [FromBody] CommentRequest commentRequest)
         {
+            _logger.LogInformation("[SERILOG] AddComment function called");
             String respond = _familyEventService.addComment(id, username, commentRequest.Comment);
             return Ok(respond);
         }

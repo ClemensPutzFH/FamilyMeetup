@@ -1,0 +1,10 @@
+.vs/
+obj
+bin/
+
+*.log
+
+.env
+
+FamilyMeetup.db-*
+Buffer*
