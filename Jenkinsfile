@@ -41,8 +41,10 @@ pipeline {
         }
 
         stage('Publish Tests') {
+            steps {
                 sh 'dotnet publish FamilyMeetup.Tests/FamilyMeetup.Tests.csproj --configuration Release --output ./publish'
             }
+        }
 
         stage('Test') {
             steps {
