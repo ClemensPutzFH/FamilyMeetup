@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                    sh 'dotnet test FamilyMeetup.Tests/FamilyMeetup.Tests.csproj --configuration Release --no-build --logger trx'
+                    sh 'dotnet test'
             }
         }
         stage('Install SonarScanner') {
