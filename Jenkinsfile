@@ -41,7 +41,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'dotnet test'
+                dir('FamilyMeetup.Tests') {
+                    sh 'dotnet test --configuration Release --no-build --logger trx'
+                }
             }
         }
         stage('Install SonarScanner') {
@@ -65,7 +67,6 @@ pipeline {
                     withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
                         sh 'dotnet sonarscanner begin /k:"family-meetup" /d:sonar.login=$SONAR_AUTH_TOKEN'
                         sh 'dotnet build'
-                        sh 'dotnet test FamilyMeetup.Tests/FamilyMeetup.Tests.csproj --configuration Release --no-build --logger trx'
                         sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_AUTH_TOKEN'
                     }
                 }
