@@ -36,18 +36,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'pwd'
-                sh 'ls -la'
                 sh 'dotnet build'
             }
         }
         stage('Test') {
             steps {
-                dir('FamilyMeetup.Tests') {
-                    sh 'pwd'
-                    sh 'ls -la'
-                    sh 'dotnet test --configuration Release --no-build --logger trx'
-                }
+                    sh 'dotnet test FamilyMeetup.Tests/FamilyMeetup.Tests.csproj --configuration Release --no-build --logger trx'
             }
         }
         stage('Install SonarScanner') {
