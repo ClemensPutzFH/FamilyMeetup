@@ -65,6 +65,7 @@ pipeline {
                     withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
                         sh 'dotnet sonarscanner begin /k:"family-meetup" /d:sonar.login=$SONAR_AUTH_TOKEN'
                         sh 'dotnet build'
+                        sh 'dotnet test --collect "Code Coverage"'
                         sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_AUTH_TOKEN'
                     }
                 }
