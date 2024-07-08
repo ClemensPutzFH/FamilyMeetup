@@ -38,7 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <ProjectReference Include="..\Family-Meetup.csproj" />
+    <ProjectReference Include="Family-Meetup.csproj" />
   </ItemGroup>
 
 </Project>
