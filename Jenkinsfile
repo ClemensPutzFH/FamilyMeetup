@@ -36,6 +36,7 @@ pipeline {
         }
         stage('Build') {
             steps {
+                sh 'pwd'
                 sh 'dotnet build'
             }
         }
