@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Checkout from SCM') {
             steps {
-                git branch: 'pipeline', url: 'https://github.com/ClemensPutzFH/FamilyMeetup.git'
+                git branch: 'main', url: 'https://github.com/ClemensPutzFH/FamilyMeetup.git'
             }
         }
 
@@ -37,12 +37,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'dotnet build'
-            }
-        }
-
-        stage('Publish Tests') {
-            steps {
-                sh 'dotnet publish FamilyMeetup.Tests/FamilyMeetup.Tests.csproj --configuration Release --output ./publish'
             }
         }
 
