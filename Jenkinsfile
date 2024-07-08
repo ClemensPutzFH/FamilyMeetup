@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Checkout from SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/ClemensPutzFH/FamilyMeetup.git'
+                git branch: 'pipeline', url: 'https://github.com/ClemensPutzFH/FamilyMeetup.git'
             }
         }
 
