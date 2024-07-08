@@ -43,6 +43,7 @@ pipeline {
             steps {
                 dir('FamilyMeetup.Tests') {
                     sh 'pwd'
+                    sh 'ls -la'
                     sh 'dotnet test --configuration Release --no-build --logger trx'
                 }
             }
