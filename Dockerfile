@@ -10,7 +10,11 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal
 WORKDIR /app
 COPY --from=build /app ./
 
-EXPOSE 5000
+#Expose all ports used in the launchSettings.json
+EXPOSE 37328
+EXPOSE 44355
+EXPOSE 7168
+EXPOSE 5168
 
 ENTRYPOINT ["dotnet", "Family-Meetup.dll"]
 
