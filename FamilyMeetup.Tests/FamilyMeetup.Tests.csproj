@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <ProjectReference Include="..\Family-Meetup.csproj" />
   </ItemGroup>
 
 </Project>
